@@ -80,8 +80,7 @@ def indexing(coordinates):
     Returns:
     - np.ndarray: Labels assigned by the clustering algorithm (superpoint IDs).
     """
-
-    # Step 2: Check the length of the list
+    # Checking the length of the cordinates
     data_length = len(coordinates)
     print(f"Length of the data: {data_length}")
 
