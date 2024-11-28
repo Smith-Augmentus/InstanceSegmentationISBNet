@@ -14,21 +14,6 @@ RUN apt-get update \
 # Install torch-scatter 
 RUN pip install torch-scatter==2.1.2 -f https://data.pyg.org/whl/torch-1.13.0+cu116.html --no-deps
 
-# Install ScanNet superpoint segmentator
-RUN git clone https://github.com/Karbo123/segmentator.git \
-    && cd segmentator/csrc \
-    && git reset --hard 76efe46d03dd27afa78df972b17d07f2c6cfb696 \
-    && mkdir build \
-    && cd build \
-    && cmake .. \
-        -DCMAKE_PREFIX_PATH=`python -c 'import torch;print(torch.utils.cmake_prefix_path)'` \
-        -DPYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") \
-        -DPYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))") \
-        -DCMAKE_INSTALL_PREFIX=`python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())'` \
-    && make \
-    && make install \
-    && cd ../../..
-
 # Install remaining python packages
 RUN pip install --no-deps \
     munch \
